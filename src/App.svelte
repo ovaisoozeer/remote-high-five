@@ -1,6 +1,7 @@
 <script>
+	let pusher;
 	let state = 'Not ready';
-
+	
 	function handleClick() {
 		switch (state)
 		{
@@ -12,7 +13,18 @@
 				break;
 		}
 	}
+
+	const initPusher = () => {
+		pusher = new Pusher(process.env.PUSHER_KEY, {
+			authTransport: 'jsonp',
+			authEndpoint: 'https://admiring-goldberg-f67d32.netlify.app/.netlify/functions/authenticate'
+		});
+	}
 </script>
+
+<svelte:head>
+	<script src="//js.pusher.com/7.0/pusher.min.js" on:load={initPusher}></script>
+</svelte:head>
 
 <button on:click={handleClick}>
 	State: {state}
