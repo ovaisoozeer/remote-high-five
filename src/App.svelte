@@ -1,5 +1,5 @@
 <script>
-	let pusher;
+	let pusher, channel;
 	let state = 'Not ready';
 	
 	function handleClick() {
@@ -18,6 +18,23 @@
 		pusher = new Pusher('f360fc8c9852a44893fb', {
 			authTransport: 'jsonp',
 			authEndpoint: 'https://admiring-goldberg-f67d32.netlify.app/.netlify/functions/authenticate'
+		});
+		
+		channel = pusher.subscribe('presence-remote-high-five');
+
+		channel.bind('pusher:subscription_succeeded', function() {
+			console.log('I\'ve subscribed to the presence channel');
+
+			console.log('Now to tell others...');
+			channel.trigger('client-subscribed', { ovais: 'joined' });
+		});
+
+		channel.bind('client-subscribed', function (data, metadata) {
+			console.log(
+				'I received ', data,
+				'from user ', metadata.user_id,
+				'with user info ', channel.members.get(metadata.user_id).info
+			);
 		});
 	}
 </script>
