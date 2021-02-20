@@ -15,7 +15,7 @@
 	}
 
 	const initPusher = () => {
-		pusher = new Pusher(process.env.PUSHER_KEY, {
+		pusher = new Pusher('f360fc8c9852a44893fb', {
 			authTransport: 'jsonp',
 			authEndpoint: 'https://admiring-goldberg-f67d32.netlify.app/.netlify/functions/authenticate'
 		});
