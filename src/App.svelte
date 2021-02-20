@@ -1,3 +1,7 @@
+<svelte:head>
+	<script src="//js.pusher.com/7.0/pusher.min.js" on:load={initPusher}></script>
+</svelte:head>
+
 <script>
 	let pusher, channel;
 	let state = 'Not ready';
@@ -38,10 +42,6 @@
 		});
 	}
 </script>
-
-<svelte:head>
-	<script src="//js.pusher.com/7.0/pusher.min.js" on:load={initPusher}></script>
-</svelte:head>
 
 <button on:click={handleClick}>
 	State: {state}
